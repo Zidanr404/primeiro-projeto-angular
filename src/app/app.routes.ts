@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [
-  { path: 'categories', loadChildren: () => import('./pages/categories/categories.module').then(m => m.CategoriesRoutingModule) }
+const routes: Routes = [
+    { 
+      path: 'categories', loadChildren: () => import('./pages/categories/categories.module')
+      .then(m => m.CategoriesModule) 
+    },
+    { path: ' ', redirectTo: 'reports', pathMatch: 'full'}
 ];
 
 @NgModule({
