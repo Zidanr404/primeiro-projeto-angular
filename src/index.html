@@ -5,6 +5,14 @@
   <title>PrimeiroProjetoAngular</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta http-equiv="Content-Security-Policy" 
+<meta http-equiv="Content-Security-Policy" 
+      content="default-src 'none'; 
+               script-src 'self'; 
+               style-src 'self' 'unsafe-inline'; 
+               connect-src 'self' http: https: ws: wss:; 
+               img-src 'self' data: https:; 
+               font-src 'self' data: https:;">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
 </head>
@@ -12,3 +20,8 @@
   <app-root></app-root>
 </body>
 </html>
+
+// Ainda não resolvi o problema do CSP, mas adicionei a meta tag para tentar resolver. O problema é que o Angular não tem acesso ao DOM para adicionar a meta tag, então eu tive que adicioná-la manualmente no index.html. 
+// O erro que estou recebendo é: "Refused to load the script 'http://localhost:4200/main.js' because it violates the following Content Security Policy directive: "script-src 'self'". Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback." Isso significa que o Angular não tem permissão para carregar o script main.js, que é o arquivo principal do Angular.
+// Para resolver esse problema, eu adicionei a meta tag de Content Security Policy no index.html, permitindo que o Angular carregue os scripts necessários. A meta tag que adicionei é a seguinte: <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' http: https: ws: wss:; img-src 'self' data: https:; font-src 'self' data: https:;">. Essa meta tag permite que o Angular carregue os scripts, estilos, conexões, imagens e fontes necessárias para o funcionamento do aplicativo.
+// No entanto, mesmo com a meta tag adicionada, ainda estou recebendo o mesmo erro. Isso pode ser devido a outras restrições de segurança do navegador ou a uma configuração incorreta da meta tag. Vou continuar investigando o problema para encontrar uma solução adequada.
