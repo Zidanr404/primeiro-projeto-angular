@@ -4,26 +4,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, flatMap } from 'rxjs/operators';
-import { category } from './category.model';
+import { Category } from './category.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class categoryService {
+export class CategoryService {
 
   private apiPath: string = 'api/categories';
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<category[]> {
+  getAll(): Observable<Category[]> {
     
-    return this.http.get<category[]>(this.apiPath).pipe(
+    return this.http.get<Category[]>(this.apiPath).pipe(
       catchError(this.handleError),
       map(this.jsonDataToCategories)
     );
   }
 
-  getById(id: number): Observable<category> {
+  getById(id: number): Observable<Category> {
     const url = `${this.apiPath}/${id}`;
     
     return this.http.get(url).pipe(
@@ -32,15 +32,14 @@ export class categoryService {
     );
   }
 
-  create(category: category): Observable<category> {
-    
+  create(category: Category): Observable<Category> {
     return this.http.post(this.apiPath, category).pipe(
       catchError(this.handleError),
       map(this.jsonDataToCategory)
     );
   }
 
-  update(category: category): Observable<category> {
+  update(category: Category): Observable<Category> {
     const url = `${this.apiPath}/${category.id}`; 
 
     return this.http.put(url, category).pipe(
@@ -59,14 +58,14 @@ export class categoryService {
 
   // Private methods
 
-  private jsonDataToCategories(jsonData: any[]): category[] {
-    const categories: category[] = [];
-    jsonData.forEach(element => categories.push(element as category));
+  private jsonDataToCategories(jsonData: any[]): Category[] {
+    const categories: Category[] = [];
+    jsonData.forEach(element => categories.push(element as Category));
     return categories;
   }
 
-  private jsonDataToCategory(jsonData: any): category {
-    return jsonData as category;
+  private jsonDataToCategory(jsonData: any): Category {
+    return jsonData as Category;
   }
 
   private handleError(error: any): Observable<any> {
@@ -76,15 +75,3 @@ export class categoryService {
   
 }
 
-
-export class Category {
-  id: number;
-  name: string;
-  description: string;
-
-  constructor(id: number, name: string, description: string) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-  }
-}

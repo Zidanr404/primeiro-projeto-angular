@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDatabase } from './in-memory-database';
@@ -8,7 +9,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase)],
+  imports: [RouterModule.forRoot(routes), HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { } 

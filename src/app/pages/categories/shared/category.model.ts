@@ -1,6 +1,6 @@
 
 
-export class category {
+export class Category {
 
     id: number;
     name: string;
