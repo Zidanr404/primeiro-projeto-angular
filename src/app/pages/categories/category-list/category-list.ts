@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppRoutingModule } from "../../../app.routes";
+import { NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 import { Category } from '../shared/category.model';
 import { CategoryService } from '../shared/category';
@@ -8,7 +10,7 @@ import { CategoryService } from '../shared/category';
 
 @Component({
   selector: 'app-category-list',
-  imports: [AppRoutingModule],
+  imports: [AppRoutingModule, NgFor, RouterLink],
   templateUrl: './category-list.html',
   styleUrl: './category-list.scss',
 })
