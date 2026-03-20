@@ -31,7 +31,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/toastr/build/toastr.css"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",

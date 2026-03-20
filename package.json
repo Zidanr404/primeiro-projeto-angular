@@ -35,6 +35,7 @@
     "angular-in-memory-web-api": "^0.21.0",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
+    "toastr": "^2.1.4",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
@@ -43,6 +44,7 @@
     "@angular/compiler-cli": "^21.0.0",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
+    "@types/toastr": "^2.1.43",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
