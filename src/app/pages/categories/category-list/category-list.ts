@@ -32,7 +32,7 @@ export class CategoryList implements OnInit {
   deleteCategory(category: Category) {
   const mustDelete = confirm('Deseja realmente excluir esse item?');
 
-  if (mustDelete) {
+  if (mustDelete && category.id) {
     this.categoryService.delete(category.id).subscribe(
       () => this.categories = this.categories.filter(element => element !== category),
       (error) => console.error('Erro ao deletar categoria', error)
