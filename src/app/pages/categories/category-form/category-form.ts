@@ -1,5 +1,3 @@
-//problema em encontrar os toastr, verificar se o toastr está instalado e importado corretamente no projeto, e se a versão do toastr é compatível com a versão do Angular utilizada. Além disso, verificar se o caminho de importação do toastr está correto.
-
 import { Component, AfterContentChecked, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -10,7 +8,7 @@ import { CategoryService } from '../shared/category';
 
 import { switchMap } from 'rxjs/operators';
 
-import * as toastr from 'toastr';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -28,15 +26,14 @@ export class CategoryForm implements OnInit , AfterContentChecked {
   serverErrorMessages: string[] = [];
   submitingForm: boolean = false;
   category: Category = new Category();
-//problema com o categoryForm, verificar se o FormGroup está sendo criado corretamente e se os controles estão sendo adicionados corretamente. Além disso, verificar se o template está utilizando o formGroup corretamente e se os formControlName estão corretos.
-  
 
 
    constructor(
       private categoryService: CategoryService,
       private route: ActivatedRoute,
       private router: Router,
-      private formBuilder: FormBuilder
+      private formBuilder: FormBuilder,
+      private toastr: ToastrService
    ) { }
 
     ngOnInit(): void {
@@ -53,7 +50,7 @@ export class CategoryForm implements OnInit , AfterContentChecked {
     submitForm() {
       this.submitingForm = true;
 
-      if (this.currentAction == 'new') {
+      if (this.currentAction === 'new') {
         this.createCategory();
       } else {
         this.updateCategory();
@@ -61,10 +58,10 @@ export class CategoryForm implements OnInit , AfterContentChecked {
     }
 
      
-    //Privite methods
+    //Private methods
 
     private setCurrentAction() {
-      this.route.snapshot.url[0].path == 'new' ? this.currentAction = 'new' : this.currentAction = 'edit';
+      this.route.snapshot.url[0].path === 'new' ? this.currentAction = 'new' : this.currentAction = 'edit';
    }
 
     private buildCategoryForm() {
@@ -74,9 +71,9 @@ export class CategoryForm implements OnInit , AfterContentChecked {
         description: [null]
       });
     }
-//problema com o loadCategory, verificar se o método getById do CategoryService está funcionando corretamente e se o id passado para o método é válido. Além disso, verificar se a rota está configurada corretamente para passar o id da categoria a ser editada.
+
     private loadCategory() {
-      if (this.currentAction == 'edit') {
+      if (this.currentAction === 'edit') {
         this.route.paramMap.pipe(
           switchMap(params => this.categoryService.getById(+params.get('id')!))
         )
@@ -91,7 +88,7 @@ export class CategoryForm implements OnInit , AfterContentChecked {
   
 
     private setPageTitle() {
-      if (this.currentAction == 'new') {
+      if (this.currentAction === 'new') {
         this.pageTitle = 'Cadastro de Nova Categoria';
       } else {
         const categoryName = this.category.name || '';
@@ -117,7 +114,7 @@ export class CategoryForm implements OnInit , AfterContentChecked {
     }
 
     private actionsForSuccess(category: Category) {
-        toastr.success('Solicitação processada com sucesso!');
+        this.toastr.success('Solicitação processada com sucesso!');
 
         this.router.navigateByUrl('categories', { skipLocationChange: true }).then(
             () => this.router.navigate(['categories', category.id, 'edit'])
@@ -125,7 +122,7 @@ export class CategoryForm implements OnInit , AfterContentChecked {
     }
 
     private actionsForError(error: any) {
-        toastr.error('Ocorreu um erro ao processar a sua solicitação!');
+        this.toastr.error('Ocorreu um erro ao processar a sua solicitação!');
         this.submitingForm = false;
 
         if (error.status === 422) {
@@ -134,6 +131,4 @@ export class CategoryForm implements OnInit , AfterContentChecked {
             this.serverErrorMessages = ['Falha na comunicação com o servidor. Por favor, tente mais tarde.'];
         }
     }
-
-    //Object.assign é um método do JavaScript que copia os valores de todas as propriedades enumeráveis de um ou mais objetos de origem para um objeto de destino. Ele retorna o objeto de destino modificado. No código acima, ele está sendo usado para criar uma nova instância de Category e copiar os valores do formulário para essa instância.
 }

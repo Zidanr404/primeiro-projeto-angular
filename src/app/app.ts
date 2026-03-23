@@ -11,10 +11,6 @@ export class App {
   protected readonly title = signal('primeiro-projeto-angular');
 
 
-  funcao1 () {
-    alert("Função chamada!");
-  }
-
     
   
 }
