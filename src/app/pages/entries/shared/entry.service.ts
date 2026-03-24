@@ -19,7 +19,7 @@ export class EntryService {
     
     return this.http.get<Entry[]>(this.apiPath).pipe(
       catchError(this.handleError),
-      map(this.jsonDataToCategories)
+      map(this.jsonDataToEntries)
     );
   }
 
